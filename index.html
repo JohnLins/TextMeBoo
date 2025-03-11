@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-           
             margin: 0px;
             padding: 0px;
             background: black;
@@ -19,7 +18,9 @@
             align-items: center;
             height: 100vh;
             text-align: center;
-            margin-top:-70px;
+            margin-top: -70px;
+            padding-left: 20px;
+            padding-right: 20px;
         }
         h1 {
             font-size: 4rem;
@@ -69,8 +70,8 @@
         }
         .footer {
             position: absolute;
-            bottom: 10px;
-            font-size: 1rem;
+            bottom: 20px;
+            font-size: 0.8rem;
             font-weight: bold;
         }
         .footer a {
@@ -84,25 +85,26 @@
     </style>
 </head>
 <body>
-    <b style="position:fixed; top: 10px; left: 20px;font-size: 2rem;background: linear-gradient(45deg, #ff9a9e, #fecfef);
+    <b style="position:fixed; top: 10px; left: 20px; font-size: 2rem; background: linear-gradient(45deg, #ff9a9e, #fecfef);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;">textme.boo</b>
 
-<div>
     <h1>Your AI Male</h1>
     <p>it's just some dude you can text whenever you want. enter your number, and let the fun begin*</p>
     <div class="input-container">
         <input type="tel" id="phone" placeholder="(000) 000-0000" maxlength="14" oninput="formatPhoneNumber(this)">
         <button onclick="startFun()">Start</button>
-
     </div>
-    <br/><br/>
-<p style="color:white; font-size: .6em">*By providing your number, you consent to receive SMS messages. Message and data rates may apply. You must consent by replying with "YES".</p>
     <div class="footer">
+        <p style="color:white; font-size: .8em; text-align:center;">*By providing your number, you consent to receive SMS messages. Message and data rates may apply. You must consent by replying with "YES".</p>
+        
         <a href="tos.html">Terms of Service</a>
-        <a href="tos.html">Privacy Policy</a>
+        <a href="tos.html">Privacy Policy</a><br/>
+        
+            
     </div>
-  </div>
+
+  
     <script>
         function formatPhoneNumber(input) {
             let value = input.value.replace(/\D/g, "");
@@ -117,10 +119,19 @@
             }
             input.value = formattedValue;
         }
+
         function startFun() {
             const phone = document.getElementById('phone').value;
             if (phone.length === 14) {
-                alert(`Welcome! AI Male will reach out to ${phone} soon.`);
+                const url = `https://web-production-ac30.up.railway.app/new?number=${phone.replace(/\D/g, '')}`;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(`Welcome! AI Male will reach out to ${phone} soon.`);
+                    })
+                    .catch(error => {
+                        alert('There was an error. Please try again.');
+                    });
             } else {
                 alert('Please enter a valid phone number.');
             }
